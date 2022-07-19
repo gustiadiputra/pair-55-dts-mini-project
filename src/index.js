@@ -2,16 +2,39 @@ import './index.css';
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
-
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import Login from './containers/Login';
+import Register from './containers/Register';
+import NoMatch from './containers/NoMatch';
+import ProtectedRoute from './components/ProtectedRoute';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <Routes>
+        <Route path='/' element={
+          <ProtectedRoute>
+            <App />
+          </ProtectedRoute>
+        } />
+        <Route path='login' element={
+          <ProtectedRoute>
+            <Login />
+          </ProtectedRoute>} />
+        <Route path='register' element={
+          <ProtectedRoute>
+            <Register />
+          </ProtectedRoute>
+        } />
+        <Route path='*' element={
+          <ProtectedRoute>
+            <NoMatch />
+          </ProtectedRoute>
+        } />
+      </Routes>
     </BrowserRouter>
   </React.StrictMode>
 );
